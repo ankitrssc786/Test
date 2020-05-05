@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+    <groupId>com.test</groupId>
+    <artifactId>test</artifactId>
+    <version>2012.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+  <dependencies>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <version>5.5.0</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mongodb</groupId>
+      <artifactId>mongodb-driver</artifactId>
+      <version>3.12.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.mongodb</groupId>
+      <artifactId>mongodb-driver-core</artifactId>
+      <version>3.0.4</version>
+    </dependency>
+    <dependency>
+      <groupId>org.mongodb</groupId>
+      <artifactId>bson</artifactId>
+      <version>3.0.4</version>
+    </dependency>
+  </dependencies>
+  <!--
+    Due to the use of MongoDB in the test of this pattern, TRAVIS and/or MAVEN might fail if the DB connection is
+    not open for the JUnit test. To avoid disrupting the compilation process, the surefire plug-in was used
+    to SKIP the running of the JUnit tests for this pattern. To ACTIVATE the running of the tests, change the
+    skipTests (below) flag to 'false' and vice-versa.
+  -->
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <skipTests>false</skipTests>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <executions>
+          <execution>
+            <configuration>
+              <archive>
+                <manifest>
+                  <mainClass>com.test.caching.App</mainClass>
+                </manifest>
+              </archive>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>
